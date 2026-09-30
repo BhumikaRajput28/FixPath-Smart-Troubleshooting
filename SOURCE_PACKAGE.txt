@@ -1,1 +1,0 @@
-The complete prototype source package is attached to the ChatGPT task as sgte_voice_assistant_fixed(1).zip. This marker file reserves the intended source-package location while the available GitHub connector is limited to text-content writes.
