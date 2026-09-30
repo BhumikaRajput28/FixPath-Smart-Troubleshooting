@@ -1,0 +1,193 @@
+
+
+QUICK START (Windows)
+---------------------
+1. Make sure Node.js 18 or newer is installed.
+2. Open this folder in File Explorer.
+3. Double-click start-windows.bat.
+4. The server starts on port 8080. If 8080 is already in use, it automatically
+   tries 8081, 8082, and so on.
+5. Open the "Console" URL printed in the black window. Do not assume it is
+   always port 8080.
+6. Leave the black window open while using the prototype.
+7. Press Ctrl+C to stop the server.
+
+You do NOT need npm install. This project has zero npm dependencies.
+===========================================================================
+  SMART GUIDED TROUBLESHOOTING ENGINE  —  how to run it
+===========================================================================
+
+You need ONE thing installed: Node.js, version 18 or newer.
+There is nothing to install after that. No npm install, no packages,
+no API keys, no internet connection required.
+
+
+---------------------------------------------------------------------------
+STEP 1  —  Check whether you already have Node
+---------------------------------------------------------------------------
+
+Open a terminal:
+
+  Windows   press the Windows key, type  cmd  , press Enter
+  macOS     press Cmd+Space, type  terminal  , press Enter
+  Linux     press Ctrl+Alt+T
+
+Type this and press Enter:
+
+  node --version
+
+If you see something like  v18.17.0  or  v20.11.0  or higher, skip to STEP 3.
+If you see "command not found" or "not recognized", do STEP 2.
+
+
+---------------------------------------------------------------------------
+STEP 2  —  Install Node.js  (only if STEP 1 said it is missing)
+---------------------------------------------------------------------------
+
+  1. Go to   https://nodejs.org
+  2. Download the big green "LTS" button. Take the default options.
+  3. CLOSE the terminal window and open a NEW one.
+     (An already-open terminal will not see the new install.)
+  4. Run  node --version  again. You should now see a version number.
+
+
+---------------------------------------------------------------------------
+STEP 3  —  Go to the project folder
+---------------------------------------------------------------------------
+
+Unzip the project somewhere you can find, e.g. your Desktop.
+
+In the terminal, type  cd  then a SPACE, then drag the unzipped folder
+onto the terminal window and press Enter. That fills in the path for you.
+
+Or type it by hand, for example:
+
+  Windows   cd C:\Users\YourName\Desktop\sgte
+  macOS     cd ~/Desktop/sgte
+  Linux     cd ~/Desktop/sgte
+
+To check you are in the right place, run:
+
+  Windows   dir
+  macOS     ls
+  Linux     ls
+
+You should see  server ,  engine ,  public ,  data  and  package.json  listed.
+
+
+---------------------------------------------------------------------------
+STEP 4  —  Start it
+---------------------------------------------------------------------------
+
+  node server/index.js
+
+You should see a box like this:
+
+    Smart Guided Troubleshooting Engine
+    ------------------------------------------------------------
+    API            http://127.0.0.1:8080/v1/troubleshoot
+    Health         http://127.0.0.1:8080/health
+    Console        http://127.0.0.1:8080
+    ------------------------------------------------------------
+    Deeplinks      578 catalog entries, 997 URIs
+    Reference      20 rows
+    Cache          20 pre-warmed plans
+    ...
+
+Leave that window OPEN. Closing it stops the server.
+
+
+---------------------------------------------------------------------------
+STEP 5  —  Open it in your browser
+---------------------------------------------------------------------------
+
+Go to:
+
+  http://127.0.0.1:8080
+
+Type a problem, or click one of the "Try" chips, and press Diagnose.
+
+WHAT TO CLICK FOR THE BEST DEMO:
+  Pick the first "Try" chip (about the navigation bar and touch).
+  It produces a plan with real deeplinks, a validation check, and all
+  three action categories in the correct order.
+
+Things worth showing:
+  * the coloured category badges — auto / manual / critical, and note
+    that critical actions are always ordered LAST
+  * the pink deeplink buttons — these are copied from the catalog, never
+    constructed; click one and it copies the URI
+  * "Guide me step by step" — then "I'm stuck on this step"
+  * "Technical details" at the bottom — the canonical cache key, all 10
+    query paraphrases, and the deeplink decision for every step group
+  * the Metrics tab
+  * the moon icon, top right, for the light theme
+
+
+---------------------------------------------------------------------------
+STEP 6  —  Stop it
+---------------------------------------------------------------------------
+
+Click the terminal window and press  Ctrl+C .
+
+
+---------------------------------------------------------------------------
+IF SOMETHING GOES WRONG
+---------------------------------------------------------------------------
+
+"EADDRINUSE" or "address already in use"
+    Port 8080 is taken by something else. Run it on another port:
+       Windows   set PORT=9000 && node server/index.js
+       macOS     PORT=9000 node server/index.js
+       Linux     PORT=9000 node server/index.js
+    Then open  http://127.0.0.1:9000  instead.
+
+"Cannot find module"
+    You are in the wrong folder. Redo STEP 3 — you must be in the folder
+    that directly contains package.json.
+
+The page loads but says it cannot reach the server
+    The terminal window was closed. Redo STEP 4.
+
+Nothing happens when you click Diagnose
+    Look at the terminal window for a red error message.
+
+The microphone button is greyed out
+    Your browser has no speech recognition. Chrome and Edge have it;
+    Firefox does not. Typing works everywhere.
+
+
+---------------------------------------------------------------------------
+FOR THE TECHNICAL REVIEWER
+---------------------------------------------------------------------------
+
+Run the whole verification chain:
+
+  npm run verify
+
+That runs the 41 regression tests, rebuilds the cache, runs every supplied
+query plus an unseen paraphrase of each, validates the output against the
+schema and the specification's rules, benchmarks latency per execution
+path, and regenerates  metrics.md  (the Appendix C evaluation report).
+
+Individually:
+
+  npm test               regression tests
+  npm run batch          -> results.jsonl
+  npm run validate       schema + rule gate (exit code 1 on failure)
+  npm run bench          latency percentiles -> data/bench.json
+  npm run metrics        -> metrics.md
+
+Check the API directly:
+
+  curl http://127.0.0.1:8080/health
+
+  curl -X POST http://127.0.0.1:8080/v1/troubleshoot ^
+       -H "content-type: application/json" ^
+       -d "{\"query\":\"my screen went completely black\"}"
+
+  (on macOS/Linux use \ instead of ^ at the end of each line)
+
+README.md has the design decisions, including an honest account of the one
+metric that falls short of its target and why forcing it higher would be
+the wrong call.

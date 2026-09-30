@@ -1,0 +1,41 @@
+{
+  "iterations": 10,
+  "queries": 20,
+  "coldStartMs": 42.304,
+  "catalogEntries": 578,
+  "paths": {
+    "cold": {
+      "n": 200,
+      "p50": 2.04,
+      "p95": 9.28,
+      "p99": 11.68,
+      "min": 0.52,
+      "max": 25.62,
+      "mean": 3.33
+    },
+    "warmExact": {
+      "n": 200,
+      "p50": 0.09,
+      "p95": 0.15,
+      "p99": 0.31,
+      "min": 0.05,
+      "max": 0.6,
+      "mean": 0.1
+    },
+    "warmParaphrase": {
+      "n": 200,
+      "p50": 0.04,
+      "p95": 0.09,
+      "p99": 0.47,
+      "min": 0.02,
+      "max": 0.72,
+      "mean": 0.05
+    }
+  },
+  "semanticHitRate": 1,
+  "budget300ms": {
+    "cold": 1,
+    "warmExact": 1,
+    "warmParaphrase": 1
+  }
+}

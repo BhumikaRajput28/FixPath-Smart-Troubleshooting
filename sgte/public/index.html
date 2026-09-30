@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FixPath — Guided Troubleshooting</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone" id="phone">
+
+  <!-- ========================================================= HOME TAB === -->
+  <section class="screen tab is-active" id="tab-home" data-tab="home">
+    <header class="topbar home-topbar">
+      <button class="iconbtn" id="menuBtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="brand"><span class="brand-dot"></span>FixPath</div>
+      <button class="iconbtn" id="profileBtn" aria-label="Device profile">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      </button>
+    </header>
+
+    <div class="scroll">
+      <div class="offlinebanner" id="offlineBanner" hidden>
+        <b>Server not reachable.</b> Diagnose, Explore and Metrics need the engine running — start it with
+        <code>node server/index.js</code> and open this page at <code id="serverUrl">http://127.0.0.1:8080</code> (not as a local file).
+      </div>
+      <div class="hero-copy">
+        <h1>Troubleshoot<br>your device issues</h1>
+        <p>Get step-by-step solutions with trusted Samsung guidance.</p>
+      </div>
+
+      <div class="searchbar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="homeSearch" type="text" placeholder="Describe your issue…" autocomplete="off">
+        <button class="micdot" id="homeMic" aria-label="Speak your issue" title="Speak your issue">
+          <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>
+        </button>
+        <button class="searchgo" id="homeGo" aria-label="Diagnose">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <p class="section-label">Choose a category</p>
+      <div class="catgrid" id="catGrid"></div>
+
+      <p class="section-label" id="recentLabel" hidden>Pick up where you left off</p>
+      <div id="homeRecent"></div>
+    </div>
+
+    <nav class="bottomnav">
+      <button class="navbtn is-current" data-tab="home">
+        <svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Home</span>
+      </button>
+      <button class="navbtn" data-tab="history">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>History</span>
+      </button>
+      <button class="navbtn" data-tab="explore">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 6-6 2 2-6 6-2z"/></svg><span>Explore</span>
+      </button>
+      <button class="navbtn" data-tab="profile">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- ====================================================== HISTORY TAB === -->
+  <section class="screen tab" id="tab-history" data-tab="history">
+    <header class="topbar">
+      <h1>History</h1>
+      <button class="iconbtn" id="historyFilterBtn" aria-label="Sort">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      </button>
+    </header>
+    <div class="segmented">
+      <button class="seg is-current" data-seg="recent">Recent</button>
+      <button class="seg" data-seg="favourites">Favourites</button>
+    </div>
+    <div class="scroll">
+      <div id="historyList" class="rowlist"></div>
+    </div>
+    <nav class="bottomnav">
+      <button class="navbtn" data-tab="home"><svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Home</span></button>
+      <button class="navbtn is-current" data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>History</span></button>
+      <button class="navbtn" data-tab="explore"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 6-6 2 2-6 6-2z"/></svg><span>Explore</span></button>
+      <button class="navbtn" data-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile</span></button>
+    </nav>
+  </section>
+
+  <!-- ====================================================== EXPLORE TAB === -->
+  <section class="screen tab" id="tab-explore" data-tab="explore">
+    <header class="topbar">
+      <h1>Explore</h1>
+      <button class="iconbtn" id="exploreSearchBtn" aria-label="Search guides">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+    </header>
+    <div class="searchbar inline" id="exploreSearchBar" hidden>
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="exploreSearch" type="text" placeholder="Search guides…" autocomplete="off">
+    </div>
+    <div class="segmented">
+      <button class="seg is-current" data-seg="guides">Guides</button>
+      <button class="seg" data-seg="tips">Tips</button>
+      <button class="seg" data-seg="issues">Common Issues</button>
+    </div>
+    <div class="scroll">
+      <div id="exploreList" class="rowlist"></div>
+    </div>
+    <nav class="bottomnav">
+      <button class="navbtn" data-tab="home"><svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Home</span></button>
+      <button class="navbtn" data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>History</span></button>
+      <button class="navbtn is-current" data-tab="explore"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 6-6 2 2-6 6-2z"/></svg><span>Explore</span></button>
+      <button class="navbtn" data-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile</span></button>
+    </nav>
+  </section>
+
+  <!-- ====================================================== PROFILE TAB === -->
+  <section class="screen tab" id="tab-profile" data-tab="profile">
+    <header class="topbar"><h1>Settings</h1></header>
+    <div class="scroll">
+      <div class="settinggroup">
+        <button class="settingrow" id="deviceInfoRow">
+          <span class="si-icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+          <span class="si-text"><b>Device information</b><small id="deviceRowSub">Galaxy S23</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <div class="settingrow">
+          <span class="si-icon"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+          <span class="si-text"><b>Theme</b><small id="themeSub">Dark</small></span>
+          <button class="switch" id="themeSwitch" role="switch" aria-checked="true" aria-label="Toggle theme"><span class="knob"></span></button>
+        </div>
+        <button class="settingrow" id="languageRow">
+          <span class="si-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></span>
+          <span class="si-text"><b>Language</b><small>English</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="settingrow" id="clearHistoryRow">
+          <span class="si-icon warn"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></span>
+          <span class="si-text"><b>Clear history</b><small>Remove saved diagnoses</small></span>
+        </button>
+      </div>
+
+      <p class="section-label">Advanced</p>
+      <div class="settinggroup">
+        <button class="settingrow" id="metricsRow">
+          <span class="si-icon"><svg viewBox="0 0 24 24"><path d="M4 19V9M12 19V4M20 19v-6"/></svg></span>
+          <span class="si-text"><b>Engine metrics</b><small>Latency, cache hits, retrieval stats</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="settingrow" id="aboutRow">
+          <span class="si-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg></span>
+          <span class="si-text"><b>About</b><small id="aboutSub">Version 1.0.0</small></span>
+        </button>
+      </div>
+    </div>
+    <nav class="bottomnav">
+      <button class="navbtn" data-tab="home"><svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>Home</span></button>
+      <button class="navbtn" data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>History</span></button>
+      <button class="navbtn" data-tab="explore"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 6-6 2 2-6 6-2z"/></svg><span>Explore</span></button>
+      <button class="navbtn is-current" data-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Profile</span></button>
+    </nav>
+  </section>
+
+  <!-- ==================================================== DEVICE INFO ===== -->
+  <section class="screen flow" id="flow-device">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="profile"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Device Information</h1>
+      <span class="iconbtn spacer"></span>
+    </header>
+    <div class="scroll">
+      <div class="infolist" id="deviceInfoList"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================== METRICS ===== -->
+  <section class="screen flow" id="flow-metrics">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="profile"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Engine Metrics</h1>
+      <span class="iconbtn spacer"></span>
+    </header>
+    <div class="scroll"><div id="metricsBody"></div></div>
+  </section>
+
+  <!-- ===================================================== DIAGNOSE: VOICE = -->
+  <section class="screen flow" id="flow-voice">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Diagnose</h1>
+      <span class="iconbtn spacer"></span>
+    </header>
+    <div class="voicewrap">
+      <div class="mic-orb" id="voiceOrb" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg></div>
+      <h2 id="voiceStatus">Ready to listen</h2>
+      <p class="muted" id="voiceHint">Tap the microphone and describe what is wrong with your device.</p>
+      <button class="voice-main-btn" id="voiceMainMic" type="button" aria-label="Start voice assistant">
+        <span class="voice-main-icon"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg></span>
+        <span id="voiceMainLabel">Start speaking</span>
+      </button>
+      <div class="voice-transcript" id="voiceTranscript" aria-live="polite"><span class="muted">Your words will appear here…</span></div>
+      <div class="voice-actions">
+        <button class="btn ghost" id="voiceTypeBtn" type="button">Type instead</button>
+        <button class="btn ghost" id="voiceSpeakBtn" type="button">Hear instructions</button>
+      </div>
+      <p class="voice-support" id="voiceSupport">Voice works best in Chrome/Edge with microphone permission enabled.</p>
+      <p class="section-label voice-example-label">Try an example</p>
+      <div class="samplechips">
+        <button class="samplechip" data-sample="My battery is draining fast">"My battery is draining fast"</button>
+        <button class="samplechip" data-sample="Wi-Fi keeps disconnecting">"Wi-Fi keeps disconnecting"</button>
+        <button class="samplechip" data-sample="Screen flickers when I record video">"Screen flickers when I record video"</button>
+      </div>
+    </div>
+    <div class="flowfooter"><button class="btn ghost full" data-back="home">Cancel</button></div>
+  </section>
+
+  <!-- ================================================= DIAGNOSE: UNDERSTAND= -->
+  <section class="screen flow" id="flow-understand">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Diagnose</h1>
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="progressdots" data-total="4" data-at="0"></div>
+    <div class="scroll">
+      <p class="step-eyebrow">Step 1 of 4</p>
+      <h2 class="step-title">We understand your issue</h2>
+      <p class="muted">Here's what we detected:</p>
+
+      <div class="detectedcard" id="detectedCard"></div>
+
+      <p class="section-label">Common causes</p>
+      <div class="causelist" id="causeList"></div>
+      <p class="hint" id="understandHint" hidden></p>
+    </div>
+    <div class="flowfooter"><button class="btn primary full" id="continueBtn">Continue →</button></div>
+  </section>
+
+  <!-- ==================================================== DIAGNOSE: STEPS == -->
+  <section class="screen flow" id="flow-steps">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="understand"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Troubleshooting</h1>
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="progressdots" data-total="4" data-at="1"></div>
+    <div class="scroll">
+      <p class="step-eyebrow">Step 2 of 4</p>
+      <h2 class="step-title">Follow these steps</h2>
+      <p class="muted">Try the steps below in order. Each step includes a direct link to the right Samsung setting.</p>
+      <div class="steplist" id="stepOverviewList"></div>
+
+      <details class="drawer card" id="techDrawer">
+        <summary><span>Technical details</span><span class="summary-hint">pipeline, retrieval decisions, validation</span></summary>
+        <div class="drawer-body" id="techBody"></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- =================================================== DIAGNOSE: GUIDED == -->
+  <section class="screen flow" id="flow-guided">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="steps"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1 id="guidedHeaderTitle">Step 1 of 4</h1>
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="progressdots" id="guidedDots" data-total="4" data-at="0"></div>
+    <div class="scroll">
+      <p class="step-eyebrow" id="guidedEyebrow">Step 1 of 4</p>
+      <h2 class="step-title" id="guidedTitle"></h2>
+      <p class="muted" id="guidedSub"></p>
+
+      <div class="checklist" id="guidedChecklist"></div>
+
+      <div class="tipcard" id="guidedTip" hidden></div>
+      <button class="linkbtn" id="stuckBtn" type="button">I'm stuck on this step</button>
+      <div class="card assist" id="assistPanel" hidden></div>
+    </div>
+    <div class="flowfooter split">
+      <button class="btn ghost" id="prevBtn">← Previous</button>
+      <button class="btn primary" id="nextBtn">Mark as done</button>
+    </div>
+  </section>
+
+  <!-- =================================================== DIAGNOSE: RESULT == -->
+  <section class="screen flow" id="flow-result">
+    <header class="topbar flowbar">
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <h1>Diagnosis Result</h1>
+      <button class="iconbtn" data-back="home"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="resultwrap">
+      <div class="result-tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h2>Issue Resolved</h2>
+      <p class="muted">Your issue should now be fixed. If you're still facing problems, you can try more solutions or explore related guides.</p>
+    </div>
+    <div class="flowfooter" style="flex-direction:column;gap:10px">
+      <button class="btn primary full" id="retryBtn">Try Another Solution</button>
+      <button class="btn ghost full" id="relatedBtn">View Related Guides</button>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

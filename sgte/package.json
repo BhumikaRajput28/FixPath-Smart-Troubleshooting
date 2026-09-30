@@ -1,0 +1,20 @@
+{
+  "name": "smart-guided-troubleshooting-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart Guided Troubleshooting Engine — query enrichment, structure extraction, deeplink mapping, fast-path caching and a REST API. Zero dependencies.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node scripts/test.js",
+    "build:cache": "node scripts/build-cache.js",
+    "batch": "node scripts/run-batch.js --paraphrase",
+    "validate": "node scripts/validate.js",
+    "bench": "node scripts/bench.js 10",
+    "metrics": "node scripts/metrics.js",
+    "verify": "node scripts/test.js && node scripts/build-cache.js && node scripts/run-batch.js --paraphrase && node scripts/validate.js && node scripts/bench.js 10 && node scripts/metrics.js"
+  }
+}
