@@ -78,7 +78,7 @@ The prototype demonstrates issue understanding, structured troubleshooting actio
 
 ## Demo video
 
-**Demo video link:** _Add the final YouTube or Google Drive URL here before submitting the hackathon form._
+**Demo video link:** https://www.loom.com/share/5e2b100b25c84ef5b3cf4b1214adb016
 
 The hackathon instructions allow a YouTube/Google Drive link when the video is too large to store directly in GitHub.
 
