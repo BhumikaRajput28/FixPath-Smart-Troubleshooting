@@ -3,7 +3,7 @@
 **Samsung PRISM Generative AI Hackathon 3rd Edition 2026–27 · Theme ID-02 · Team Noir**  
 **SRM Institute of Science and Technology, Kattankulathur**
 
-> From “Something is wrong” to “Here’s what to do next.”
+> From “Something is wrong” to “Here’s what to do next”
 
 FixPath transforms informal Samsung/Galaxy device complaints into structured, validated and actionable troubleshooting plans. The prototype combines natural-language query enrichment, hybrid retrieval, reference-grounded extraction, verified screen-level deeplinks, safety-first action sequencing, validation and semantic caching.
 
