@@ -1,1 +1,17 @@
-ewogICJuYW1lIjogInNtYXJ0LWd1aWRlZC10cm91Ymxlc2hvb3RpbmctZW5naW5lIiwKICAidmVyc2lvbiI6ICIxLjAuMCIsCiAgInByaXZhdGUiOiB0cnVlLAogICJkZXNjcmlwdGlvbiI6ICJTbWFydCBHdWlkZWQgVHJvdWJsZXNob290aW5nIEVuZ2luZSDigJQgcXVlcnkgZW5yaWNobWVudCwgc3RydWN0dXJlIGV4dHJhY3Rpb24sIGRlZXBsaW5rIG1hcHBpbmcsIGZhc3QtcGF0aCBjYWNoaW5nIGFuZCBhIFJFU1QgQVBJLiBaZXJvIGRlcGVuZGVuY2llcy4iLAogICJ0eXBlIjogIm1vZHVsZSIsCiAgImVuZ2luZXMiOiB7CiAgICAibm9kZSI6ICI+PTE4IgogIH0sCiAgInNjcmlwdHMiOiB7CiAgICAic3RhcnQiOiAibm9kZSBzZXJ2ZXIvaW5kZXguanMiLAogICAgInRlc3QiOiAibm9kZSBzY3JpcHRzL3Rlc3QuanMiLAogICAgImJ1aWxkOmNhY2hlIjogIm5vZGUgc2NyaXB0cy9idWlsZC1jYWNoZS5qcyIsCiAgICAiYmF0Y2giOiAibm9kZSBzY3JpcHRzL3J1bi1iYXRjaC5qcyAtLXBhcmFwaHJhc2UiLAogICAgInZhbGlkYXRlIjogIm5vZGUgc2NyaXB0cy92YWxpZGF0ZS5qcyIsCiAgICAiYmVuY2giOiAibm9kZSBzY3JpcHRzL2JlbmNoLmpzIDEwIiwKICAgICJtZXRyaWNzIjogIm5vZGUgc2NyaXB0cy9tZXRyaWNzLmpzIiwKICAgICJ2ZXJpZnkiOiAibm9kZSBzY3JpcHRzL3Rlc3QuanMgJiYgbm9kZSBzY3JpcHRzL2J1aWxkLWNhY2hlLmpzICYmIG5vZGUgc2NyaXB0cy9ydW4tYmF0Y2guanMgLS1wYXJhcGhyYXNlICYmIG5vZGUgc2NyaXB0cy92YWxpZGF0ZS5qcyAmJiBub2RlIHNjcmlwdHMvYmVuY2guanMgMTAgJiYgbm9kZSBzY3JpcHRzL21ldHJpY3MuanMiCiAgfQp9Cg==
+{
+  "name": "fixpath-smart-troubleshooting",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FixPath Smart Guided Troubleshooting Engine — Samsung PRISM Generative AI Hackathon 2026–27.",
+  "engines": {"node": ">=18"},
+  "scripts": {
+    "start": "node sgte/server/index.js",
+    "test": "node sgte/scripts/test.js",
+    "build:cache": "node sgte/scripts/build-cache.js",
+    "batch": "node sgte/scripts/run-batch.js --paraphrase",
+    "validate": "node sgte/scripts/validate.js",
+    "bench": "node sgte/scripts/bench.js 10",
+    "metrics": "node sgte/scripts/metrics.js",
+    "verify": "npm test && npm run build:cache && npm run batch && npm run validate && npm run bench && npm run metrics"
+  }
+}
