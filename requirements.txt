@@ -1,0 +1,4 @@
+# FixPath runtime has no Python dependencies.
+# Main runtime requirement: Node.js 18 or newer.
+# The prototype uses zero npm dependencies.
+# schema.py is retained as a Python/Pydantic cross-check only and is not required to run the prototype.
