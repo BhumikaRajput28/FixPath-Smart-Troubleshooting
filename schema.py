@@ -1,1 +1,55 @@
-IiIiUmVzcG9uc2Ugc2NoZW1hIGZvciB0aGUgU21hcnQgR3VpZGVkIFRyb3VibGVzaG9vdGluZyBFbmdpbmUgaGFja2F0aG9uLiBWYWxpZGF0ZSBldmVyeSByZXNwb25zZSBhZ2FpbnN0IGl0LiIiIg0KZnJvbSBlbnVtIGltcG9ydCBFbnVtDQpmcm9tIHR5cGluZyBpbXBvcnQgRGljdCwgTGlzdCwgT3B0aW9uYWwNCg0KZnJvbSBweWRhbnRpYyBpbXBvcnQgQmFzZU1vZGVsDQoNCg0KY2xhc3MgQmFzZURlZXBsaW5rKEJhc2VNb2RlbCk6DQogICAgZGVlcGxpbms6IHN0cg0KDQoNCmNsYXNzIERlZXBsaW5rKEJhc2VEZWVwbGluayk6DQogICAgZGVzY3JpcHRpb246IHN0cg0KICAgIG1lc3NhZ2U6IE9wdGlvbmFsW3N0cl0gPSAiIg0KICAgIGNsYXNzZXM6IE9wdGlvbmFsW0RpY3Rbc3RyLCBzdHJdXSA9IE5vbmUNCiAgICBvcmlnaW5hbFR5cGU6IE9wdGlvbmFsW3N0cl0gPSBOb25lDQogICAgDQpjbGFzcyBDb25kaXRpb24oc3RyLCBFbnVtKToNCiAgICBncmVhdGVyID0gImdyZWF0ZXIiDQogICAgZXF1YWwgPSAiZXF1YWwiDQogICAgbGVzcyA9ICJsZXNzIg0KDQpjbGFzcyBSZXN1bHRUeXBlcyhzdHIsIEVudW0pOg0KICAgIGJvb2xlYW4gPSAiYm9vbGVhbiINCg==
+"""Response schema reference for the Smart Guided Troubleshooting Engine hackathon."""
+from enum import Enum
+from typing import Dict, List, Optional
+from pydantic import BaseModel
+
+class BaseDeeplink(BaseModel):
+    deeplink: str
+
+class Deeplink(BaseDeeplink):
+    description: str
+    message: Optional[str] = ""
+    classes: Optional[Dict[str, str]] = None
+    originalType: Optional[str] = None
+
+class Condition(str, Enum):
+    greater = "greater"
+    equal = "equal"
+    less = "less"
+
+class ResultTypes(str, Enum):
+    boolean = "boolean"
+    intNum = "integer"
+    string = "str"
+    floatNum = "float"
+
+class actionCategory(str, Enum):
+    auto = "auto"
+    manual = "manual"
+    critical = "critical"
+
+class ValidationDeepLink(BaseDeeplink):
+    key: str
+    resultType: Optional[ResultTypes] = None
+    condition: Optional[Condition] = None
+    value: Optional[str] = None
+
+class StepGroup(BaseModel):
+    steps: List[str]
+    validationDeeplink: Optional[ValidationDeepLink] = None
+    actionableDeeplink: Optional[Deeplink] = None
+
+class Action(BaseModel):
+    actionName: str
+    description: str
+    stepGroups: List[StepGroup]
+    category: Optional[actionCategory] = actionCategory.manual
+
+class Goal(BaseModel):
+    goal: str
+    title: str
+    actions: List[Action]
+    score: float
+
+class ContextDeeplinkResponse(BaseModel):
+    contexts: List[Goal] = []
