@@ -1,1 +1,9 @@
-QGVjaG8gb2ZmCnRpdGxlIEZpeFBhdGggLSBTbWFydCBHdWlkZWQgVHJvdWJsZXNob290aW5nIEVuZ2luZQpjZCAvZCAiJX5kcDAiCmVjaG8uCmVjaG8gU3RhcnRpbmcgRml4UGF0aC4uLgplY2hvIElmIHBvcnQgODA4MCBpcyBidXN5LCB0aGUgc2VydmVyIHdpbGwgYXV0b21hdGljYWxseSB0cnkgdGhlIG5leHQgZnJlZSBwb3J0LgplY2hvLgpub2RlIHNlcnZlclxpbmRleC5qcwpwYXVzZQo=
+@echo off
+title FixPath - Smart Guided Troubleshooting Engine
+cd /d "%~dp0sgte"
+echo.
+echo Starting FixPath...
+echo Node.js 18+ is required. No npm install is needed.
+echo.
+node server\index.js
+pause
